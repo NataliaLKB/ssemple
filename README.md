@@ -3,4 +3,4 @@
 
 (A work in progress)
 
-see progress at http://natalialkb.github.io/gildens-art-01.
+see progress at http://natalialkb.github.io/ssemple.
