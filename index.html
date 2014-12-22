@@ -135,14 +135,16 @@
         }
         function createDomMessage (message) {
 
+            var overlay = document.getElementById("overlay");
+
             var overlayWidth = img.width - 300;
             var overlayHeight = img.height - 300;
 
-            document.getElementById("overlay").style.width = overlayWidth + "px";
-            document.getElementById("overlay").style.height = overlayHeight + "px";
+            overlay.style.width = overlayWidth + "px";
+            overlay.style.height = overlayHeight + "px";
 
-            document.getElementById("overlay").style["top"] = "150px";
-            document.getElementById("overlay").style["background-color"] = "rgba(0,0,0,0.6)";
+            overlay.style["top"] = "150px";
+            overlay.style["background-color"] = "rgba(0,0,0,0.6)";
 
             var parser = new DOMParser()
             var parsedHtml = parser.parseFromString(message, "text/html");
@@ -155,6 +157,7 @@
         function deleteDomMessage (classToDelete) {
 
             var deleteMes = document.getElementsByClassName(classToDelete);
+            var overlay = document.getElementById("overlay");
 
             if (deleteMes[0] === null)  return;
 
@@ -162,8 +165,8 @@
                 deleteMes[0].parentNode.removeChild(deleteMes[0]);
             }
 
-            document.getElementById("overlay").style["background-color"] = "rgba(0,0,0,0)";
-            document.getElementById("overlay").style["top"] = "0";
+            overlay.style["background-color"] = "rgba(0,0,0,0)";
+            overlay.style["top"] = "0";
         }
 
         function createTitle (message){
@@ -196,8 +199,8 @@
                     yPos += pieceHeight;
                 }
             }
-            var docCanvas = document.getElementById("canvas");
-            document.onmousedown = shufflePuzzle;
+
+            canvas.onclick = shufflePuzzle;
         }
 
         function shufflePuzzle (){
@@ -223,7 +226,7 @@
                     yPos += pieceHeight;
                 }
             }
-            // var docCanvas = document.getElementById("canvas");
+
             document.onmousedown = onPuzzleClick;
             document.addEventListener('touchstart', function (e) {
                 // stop touch event
@@ -270,8 +273,6 @@
                 stage.globalAlpha = .9;
                 stage.drawImage(img, currentPiece.sx, currentPiece.sy, pieceWidth, pieceHeight, mouse.x - (pieceWidth / 2), mouse.y - (pieceHeight / 2), pieceWidth, pieceHeight);
                 stage.restore();
-
-                // var docCanvas = document.getElementById("canvas");
 
                 document.onmousemove = updatePuzzle;
                 document.addEventListener('touchmove', function (e) {
@@ -370,8 +371,7 @@
             //Counts number of moves in each level
             movesCounter +=1;
 
-            // var docCanvas = document.getElementById("canvas");
-
+            canvas.onclick = null;
             document.onmousemove = null;
             document.onmouseup = null;
             document.addEventListener('touchend');
@@ -407,9 +407,8 @@
         }
         function gameOver (){
             console.log("gameover");
-
-            // var docCanvas = document.getElementById("canvas");
-
+            
+            canvas.onclick = null;
             document.onmousedown = null;
             document.onmousemove = null;
             document.onmouseup = null;
