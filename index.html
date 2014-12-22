@@ -73,6 +73,8 @@
         	difficulty +=1;
             levelCounter +=1;
 
+            console.log('init');
+
             img = new Image();
             img.addEventListener('load',onImage,false);
           
@@ -200,7 +202,7 @@
                 }
             }
 
-            canvas.onclick = shufflePuzzle;
+            canvas.onmousedown = shufflePuzzle;
         }
 
         function shufflePuzzle (){
@@ -228,23 +230,29 @@
             }
 
             document.onmousedown = onPuzzleClick;
-            document.addEventListener('touchstart', function (e) {
-                // stop touch event
-                e.stopPropagation();
-                e.preventDefault();
+            document.addEventListener('touchstart', touchStart);
+        }
+        function touchStart (e) {
+            // stop touch event
+            e.stopPropagation();
+            e.preventDefault();
 
-                // translate to mouse event
-                var clkEvt = document.createEvent('MouseEvent');
-                clkEvt.initMouseEvent('mousedown', true, true, window, e.detail, 
-                             e.touches[0].screenX, e.touches[0].screenY, 
-                             e.touches[0].clientX, e.touches[0].clientY, 
-                             false, false, false, false, 
-                             0, null);
-                document.dispatchEvent(clkEvt);
+            // translate to mouse event
+            var clkEvt = document.createEvent('MouseEvent');
+            clkEvt.initMouseEvent('mousedown', true, true, window, e.detail, 
+                         e.touches[0].screenX, e.touches[0].screenY, 
+                         e.touches[0].clientX, e.touches[0].clientY, 
+                         false, false, false, false, 
+                         0, null);
+            document.dispatchEvent(clkEvt);
 
-                // or just handle touch event
-                onPuzzleClick(e);
-            }, false);
+            // or just handle touch event
+            onPuzzleClick(e);
+        }
+
+        function shuffleArrayPieces (pieces){
+            for(var j, x, i = pieces.length; i; j = parseInt(Math.random() * i), x = pieces[--i], pieces[i] = pieces[j], pieces[j] = x);
+            return pieces;
         }
 
         function onPuzzleClick (e){
@@ -275,23 +283,7 @@
                 stage.restore();
 
                 document.onmousemove = updatePuzzle;
-                document.addEventListener('touchmove', function (e) {
-                    // stop touch event
-                    e.stopPropagation();
-                    e.preventDefault();
-
-                    // translate to mouse event
-                    var clkEvt = document.createEvent('MouseEvent');
-                    clkEvt.initMouseEvent('mousemove', true, true, window, e.detail, 
-                                 e.touches[0].screenX, e.touches[0].screenY, 
-                                 e.touches[0].clientX, e.touches[0].clientY, 
-                                 false, false, false, false, 
-                                 0, null);
-                    document.dispatchEvent(clkEvt);
-
-                    // or just handle touch event
-                    updatePuzzle(e);
-                }, false);
+                document.addEventListener('touchmove', touchMove);
 
                 document.onmouseup = pieceDropped;
                 document.addEventListener('touchend', pieceDropped);
@@ -299,6 +291,23 @@
             }
         }
 
+        function touchMove (e){
+            // stop touch event
+            e.stopPropagation();
+            e.preventDefault();
+
+            // translate to mouse event
+            var clkEvt = document.createEvent('MouseEvent');
+            clkEvt.initMouseEvent('mousemove', true, true, window, e.detail, 
+                         e.touches[0].screenX, e.touches[0].screenY, 
+                         e.touches[0].clientX, e.touches[0].clientY, 
+                         false, false, false, false, 
+                         0, null);
+            document.dispatchEvent(clkEvt);
+
+            // or just handle touch event
+            updatePuzzle(e);
+        }
         function checkPieceClicked (e){
             var i;
             var piece;
@@ -318,6 +327,8 @@
 
         function updatePuzzle (e){
             currentDropPiece = null;
+
+            console.log('updatePuzzle');
 
             if (e.touches){
             // if (e.layerX === 0){
@@ -360,7 +371,6 @@
             }
             stage.save();
             stage.globalAlpha = .6;
-            console.log(currentPiece);
             stage.drawImage(img, currentPiece.sx, currentPiece.sy, pieceWidth, pieceHeight, mouse.x - (pieceWidth / 2), mouse.y - (pieceHeight / 2), pieceWidth, pieceHeight);
             stage.restore();
             stage.strokeRect( mouse.x - (pieceWidth / 2), mouse.y - (pieceHeight / 2), pieceWidth,pieceHeight);
@@ -374,8 +384,8 @@
             canvas.onclick = null;
             document.onmousemove = null;
             document.onmouseup = null;
-            document.addEventListener('touchend');
-            //do I need touch options for above?
+            // document.removeEventListener('touchstart', touchStart);
+            // document.removeEventListener('touchmove', touchMove);
 
             if(currentDropPiece != null){
                 var tmp = {xPos:currentPiece.xPos,yPos:currentPiece.yPos};
@@ -407,16 +417,17 @@
         }
         function gameOver (){
             console.log("gameover");
-            
+
             canvas.onclick = null;
             document.onmousedown = null;
             document.onmousemove = null;
             document.onmouseup = null;
-            //do I need touch options for above?
-            document.addEventListener('touchend', function() {
-                console.log("GameOver touchend")
-            });
+            
+            document.removeEventListener('touchstart', touchStart);
+            document.removeEventListener('touchmove', touchMove);
+            document.removeEventListener('touchend', pieceDropped);
 
+            console.log(levelCounter);
             if (levelCounter === 5 ) {
                 createDomMessage("<p id='artname' class='deleteMe'>Beyond Your Command</p>");
                 createDomMessage("<p id='name' class='deleteMe'>Stuart Temple</p>");
@@ -427,10 +438,6 @@
             } else {
                 init();
             }
-        }
-        function shuffleArrayPieces (pieces){
-            for(var j, x, i = pieces.length; i; j = parseInt(Math.random() * i), x = pieces[--i], pieces[i] = pieces[j], pieces[j] = x);
-            return pieces;
         }
 
     </script>
