@@ -29,6 +29,7 @@
         #url {
             font-size: 1em;
             margin-bottom: 8em;
+            font-decoration: none;
         }
         #contact {
             font-size: 1em;
@@ -76,21 +77,6 @@
             img.src = "./img/tablet/byc800.jpg";
         }
 
-        function whichSrc (){
-            if (window.innerHeight > 1599) {
-                return "./img/HD/Gildens233h1600.jpg";
-            } else 
-            if (window.innerHeight < 1599 && window.innerHeight > 1199) {
-                return "./img/tablet/Gildens233w1200.jpg";
-            } else 
-            if (window.innerHeight < 1199 && window.innerHeight > 799) {
-                return "./img/tablet/Gildens233w800.jpg";
-            } else 
-            if (window.innerHeight < 799 && window.innerHeight > 760) {
-                return "./img/tablet/Gildens233w768.jpg";
-            }
-        }
-
         function onImage (){
             pieceWidth = Math.floor(img.width / difficulty)
             pieceHeight = Math.floor(img.height / difficulty)
@@ -117,25 +103,24 @@
             currentPiece = null;
             currentDropPiece = null;
             stage.drawImage(img, 0, 0, puzzleWidth, puzzleHeight, 0, 0, puzzleWidth, puzzleHeight);
-            console.log(levelCounter);
             if (levelCounter === 1) {
                 createTitle("Click to Start");
                 buildPieces();
                 //resets movesCounter between levels
                 movesCounter = 0;
             } else if (levelCounter === 2){
-	        createDomMessage("<p id='congrats' class='deleteMe'>Congratulations! You finished Level " + 
-	        (levelCounter - 1) + " in " + movesCounter + " moves!</p>");
-	        createDomMessage("<p class='deleteMe'>Ready for the Next Puzzle?</p>");
+    	        createDomMessage("<p id='congrats' class='deleteMe'>Congratulations! You finished Level " + 
+    	        (levelCounter - 1) + " in " + movesCounter + " moves!</p>");
+    	        createDomMessage("<p class='deleteMe'>Ready for the Next Puzzle?</p>");
 
-	        buildPieces();
-	        //resets movesCounter between levels
-	        movesCounter = 0;
+    	        buildPieces();
+    	        //resets movesCounter between levels
+    	        movesCounter = 0;
                 createTitle("Click to Start");
             } else {
                 createDomMessage("<p id='artname' class='deleteMe'>Beyond Your Command</p>");
                 createDomMessage("<p id='name' class='deleteMe'>Stuart Temple</p>");
-                createDomMessage("<p id='url' class='deleteMe'>www.delahuntyfineart.com</p><br>");
+                createDomMessage("<a href='http://www.delahuntyfineart.com/product/beyond-command-exclusive-print-by-stuart-semple/' target='_blank'><p id='url' class='deleteMe'>www.delahuntyfineart.com</p></a><br>");
                 createDomMessage("<p class='deleteMe'>Congratulations! You finished Level " + 
                 (levelCounter - 1) + " in " + movesCounter + " moves!</p>");
                 createDomMessage("<p class='deleteMe'>Ready for the Next Puzzle?</p>");
@@ -209,7 +194,7 @@
                     yPos += pieceHeight;
                 }
             }
-            document.onmousedown = shufflePuzzle;
+            document.onmouseup = shufflePuzzle;
         }
 
         function shufflePuzzle (){
@@ -425,10 +410,10 @@
             if (levelCounter === 5 ) {
                 createDomMessage("<p id='artname' class='deleteMe'>Beyond Your Command</p>");
                 createDomMessage("<p id='name' class='deleteMe'>Stuart Temple</p>");
-                createDomMessage("<p id='url' class='deleteMe'>www.delahuntyfineart.com/</p><br>");
+                createDomMessage("<a href='http://www.delahuntyfineart.com/product/beyond-command-exclusive-print-by-stuart-semple/' target='_blank'><p id='url' class='deleteMe'>www.delahuntyfineart.com</p></a><br>");
                 createDomMessage("<p class='deleteMe'>You Won the Game!</p>");
                 createDomMessage("<p class='deleteMe'>You finished Level " + 
-                   (levelCounter) + " in " + movesCounter + " moves!</p>");
+                (levelCounter) + " in " + movesCounter + " moves!</p>");
             } else {
                 init();
             }
