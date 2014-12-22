@@ -73,8 +73,6 @@
         	difficulty +=1;
             levelCounter +=1;
 
-            console.log('init');
-
             img = new Image();
             img.addEventListener('load',onImage,false);
           
@@ -123,7 +121,7 @@
                 createTitle("Click Here to Start");
             } else {
                 createDomMessage("<p id='artname' class='deleteMe'>Beyond Your Command</p>");
-                createDomMessage("<p id='name' class='deleteMe'>Stuart Temple</p>");
+                createDomMessage("<p id='name' class='deleteMe'>Stuart Semple</p>");
                 createDomMessage("<a href='http://www.delahuntyfineart.com/product/beyond-command-exclusive-print-by-stuart-semple/' target='_blank'><p id='url' class='deleteMe'>www.delahuntyfineart.com</p></a><br>");
                 createDomMessage("<p class='deleteMe'>Congratulations! You finished Level " + 
                 (levelCounter - 1) + " in " + movesCounter + " moves!</p>");
@@ -232,6 +230,7 @@
             document.onmousedown = onPuzzleClick;
             document.addEventListener('touchstart', touchStart);
         }
+
         function touchStart (e) {
             // stop touch event
             e.stopPropagation();
@@ -308,6 +307,7 @@
             // or just handle touch event
             updatePuzzle(e);
         }
+
         function checkPieceClicked (e){
             var i;
             var piece;
@@ -327,8 +327,6 @@
 
         function updatePuzzle (e){
             currentDropPiece = null;
-
-            console.log('updatePuzzle');
 
             if (e.touches){
             // if (e.layerX === 0){
@@ -428,7 +426,7 @@
             console.log(levelCounter);
             if (levelCounter === 5 ) {
                 createDomMessage("<p id='artname' class='deleteMe'>Beyond Your Command</p>");
-                createDomMessage("<p id='name' class='deleteMe'>Stuart Temple</p>");
+                createDomMessage("<p id='name' class='deleteMe'>Stuart Semple</p>");
                 createDomMessage("<a href='http://www.delahuntyfineart.com/product/beyond-command-exclusive-print-by-stuart-semple/' target='_blank'><p id='url' class='deleteMe'>www.delahuntyfineart.com</p></a><br>");
                 createDomMessage("<p class='deleteMe'>You Won the Game!</p>");
                 createDomMessage("<p class='deleteMe'>You finished Level " + 
