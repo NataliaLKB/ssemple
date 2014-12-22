@@ -29,7 +29,9 @@
         #url {
             font-size: 1em;
             margin-bottom: 8em;
-            font-decoration: none;
+        }
+        a {
+            text-decoration: none;
         }
         #contact {
             font-size: 1em;
@@ -194,7 +196,8 @@
                     yPos += pieceHeight;
                 }
             }
-            document.onmouseup = shufflePuzzle;
+            var docCanvas = document.getElementById("canvas");
+            document.onmousedown = shufflePuzzle;
         }
 
         function shufflePuzzle (){
@@ -220,6 +223,7 @@
                     yPos += pieceHeight;
                 }
             }
+            // var docCanvas = document.getElementById("canvas");
             document.onmousedown = onPuzzleClick;
             document.addEventListener('touchstart', function (e) {
                 // stop touch event
@@ -266,6 +270,8 @@
                 stage.globalAlpha = .9;
                 stage.drawImage(img, currentPiece.sx, currentPiece.sy, pieceWidth, pieceHeight, mouse.x - (pieceWidth / 2), mouse.y - (pieceHeight / 2), pieceWidth, pieceHeight);
                 stage.restore();
+
+                // var docCanvas = document.getElementById("canvas");
 
                 document.onmousemove = updatePuzzle;
                 document.addEventListener('touchmove', function (e) {
@@ -364,6 +370,8 @@
             //Counts number of moves in each level
             movesCounter +=1;
 
+            // var docCanvas = document.getElementById("canvas");
+
             document.onmousemove = null;
             document.onmouseup = null;
             document.addEventListener('touchend');
@@ -399,6 +407,9 @@
         }
         function gameOver (){
             console.log("gameover");
+
+            // var docCanvas = document.getElementById("canvas");
+
             document.onmousedown = null;
             document.onmousemove = null;
             document.onmouseup = null;
